@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from './Login.module.css'
-import { login } from '../utils/api'
+import { login } from '../utils/api.ts'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -11,10 +11,9 @@ export default function Login() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (localStorage.getItem('TOKEN')) {
-            navigate('/')
+        if (localStorage.getItem('token')) {
+            navigate('/browse')
         }
-
         document.title = "Login"
     }, []);
     
@@ -30,10 +29,10 @@ export default function Login() {
             return
         }
         try {
-            const token = await login(username, password)
-            localStorage.setItem('TOKEN', token)
+            const token = await login(username, password);
+            localStorage.setItem('token', token)
             window.dispatchEvent(new Event("storage"));
-            navigate('/')
+            navigate('/browse')
         }
         catch (err) {
             if (axios.isAxiosError(err)) {
