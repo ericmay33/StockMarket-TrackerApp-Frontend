@@ -1,0 +1,67 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: rgb(15, 17, 17);
+    height: 80px;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.logo {
+    height: 45px;
+    margin-left: 20px;
+}
+
+.login {
+    margin-right: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.logout {
+    padding: 6px 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: orange;
+    font-size: 15px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.logout:hover {
+    color: orange;
+    background-color: black;
+    border: 2px solid orange;
+}
+
+.cart {
+    color: white;
+    text-decoration: none;
+}
+
+.login:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.cart:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+.nav-items-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    gap: 20px;
+}
+
+.name {
+    color: white;
+}
