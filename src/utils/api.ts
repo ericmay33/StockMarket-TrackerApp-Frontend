@@ -13,6 +13,11 @@ export async function getStocks(): Promise<Stock[]> {
     return response.data;
 }
 
+export async function getStockByTicker(ticker: string): Promise<Stock> {
+    const response = await axios.get(`${BACKEND_URL}/stocks/${ticker}`);
+    return response.data;
+}
+
 export async function getPortfolio(token: string): Promise<PortfolioStock[]> {
     const response = await axios.get(`${BACKEND_URL}/portfolio`, { headers: { token } });
     return response.data;

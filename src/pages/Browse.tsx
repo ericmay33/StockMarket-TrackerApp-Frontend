@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styles from './Browse.module.css'
 import { Stock } from '../utils/types'
 import { getStocks } from '../utils/api'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Browse() {
     const [stocks, setStocks] = useState([] as Stock[])
@@ -27,7 +27,12 @@ export default function Browse() {
     function createStockCards() {
         return stocks.map(stock => {
             return (
-                <p>{stock.name}, {stock.ticker}, {stock.price}, {stock.percentChange}</p>
+                <Link key={stock.ticker} to={`/stock/${stock.ticker}`} className={styles['stock-card']}>
+                    <p>{stock.name}</p>
+                    <p>{stock.ticker}</p>
+                    <p>{stock.price}</p>
+                    <p>{stock.percentChange}</p>
+                </Link>
             )
         })
     }

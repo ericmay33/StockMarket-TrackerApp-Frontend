@@ -7,6 +7,7 @@ import ScrollToTop from './utils/ScrollToTop.tsx';
 import Login from './pages/Login.tsx';
 import Browse from './pages/Browse.tsx';
 import Portfolio from './pages/Portfolio.tsx';
+import StockPage from './pages/StockPage.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<MainLayout />}>
           <Route path="/browse" element={<Browse />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/stock/:ticker" element={<StockPage/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
