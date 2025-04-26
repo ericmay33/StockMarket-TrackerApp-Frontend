@@ -3,6 +3,7 @@ import styles from './Browse.module.css'
 import { PortfolioStock} from '../utils/types'
 import { getPortfolio } from '../utils/api'
 import { useNavigate } from 'react-router-dom';
+import StockCard from '../components/stock-card/StockCard';
 
 export default function Browse() {
     const [portfolio, setPortfolio] = useState([] as PortfolioStock[]);
@@ -27,10 +28,14 @@ export default function Browse() {
     function createStockCards() {
         return portfolio.map(stock => {
             return (
-                <p>{stock.name}, {stock.ticker}, {stock.price}, {stock.percentChange}</p>
+                <StockCard
+                    key={stock.ticker}
+                    stock={stock}
+                    sellButton={true}
+                />
             )
         })
-    }
+    };
 
     return (
         <div className={styles['main-container']}>

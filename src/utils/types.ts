@@ -8,20 +8,6 @@ export interface User {
     portfolio: PortfolioStock[];
 }
 
-export interface PortfolioStock {
-    ticker: string;
-    name: string;
-    marketCap: number;
-    percentChange: number;
-    price: number;
-    sector: string;
-    industry: string;
-    description: string;
-    image: string;
-    amount: number,
-    averagePrice: number
-}
-
 export interface Stock {
     ticker: string;
     name: string;
@@ -32,4 +18,9 @@ export interface Stock {
     industry: string;
     description: string;
     image: string;
+}
+
+export interface PortfolioStock extends Stock {
+    amount: number;
+    averagePrice: number;
 }

@@ -59,6 +59,7 @@ export default function NavBar() {
             return (
                 <div className={styles['nav-items-container']}>
                     <p className={styles.name}>{`${user!.firstName} ${user!.lastName}`}</p>
+                    <p className={styles.name}>{`Balance: $${user!.balance}`}</p>
                     <button className={styles.logout} onClick={stocks}>Stocks</button>
                     <button className={styles.logout} onClick={portfolio}>Portfolio</button>
                     <button className={styles.logout} onClick={logout}>Logout</button>
