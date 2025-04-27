@@ -49,9 +49,9 @@ export default function Portfolio() {
     return (
         <div className={styles['main-container']}>
             <h1>Portfolio Stocks</h1>
-            <p className={styles['number-of-shop-items']}>Number of stocks in Portfolio: <span>{portfolio.length}</span></p>
+            <p className={styles['number-of-portfolio-stocks']}>Number of stocks in Portfolio: <span>{portfolio.length}</span></p>
             <p></p>
-            <div className={styles['product-list']}>
+            <div className={styles['portfolio-list']}>
                 { createStockCards() }
             </div>
         </div>

@@ -47,7 +47,7 @@ export default function StockPage() {
         <div className={`${styles.flex} ${styles['flex-justify-center']}`}>
             <div className={styles['main-container']}>
                 <img src={stock.image} alt={stock.name} />
-                <div className={styles['product-info-container']}>
+                <div className={styles['stock-info-container']}>
                     <p>{stock.name}</p>
                     <p>{stock.ticker}</p>
                     <p>{stock.marketCap}</p>

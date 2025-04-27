@@ -12,12 +12,6 @@
     margin-left: 20px;
 }
 
-.login {
-    margin-right: 20px;
-    color: white;
-    text-decoration: none;
-}
-
 .logout {
     padding: 6px 10px;
     border: 2px solid black;
@@ -34,23 +28,6 @@
     color: orange;
     background-color: black;
     border: 2px solid orange;
-}
-
-.cart {
-    color: white;
-    text-decoration: none;
-}
-
-.login:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-}
-
-.cart:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
 }
 
 .nav-items-container {

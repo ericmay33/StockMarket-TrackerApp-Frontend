@@ -56,21 +56,15 @@ export default function NavBar() {
     }
 
     function createNavItems() {
-        if (!isLoggedIn) {
-            return <Link className={styles.login} to="/login">Login</Link>;
-        } else if (isLoggedIn && !user) {
-            return <button className={styles.logout} onClick={logout}>Logout</button>;
-        } else {
-            return (
-                <div className={styles['nav-items-container']}>
-                    <p className={styles.name}>{`${user!.firstName} ${user!.lastName}`}</p>
-                    <p className={styles.name}>{`Balance: $${user!.balance.toFixed(2)}`}</p>
-                    <button className={styles.logout} onClick={stocks}>Stocks</button>
-                    <button className={styles.logout} onClick={portfolio}>Portfolio</button>
-                    <button className={styles.logout} onClick={logout}>Logout</button>
-                </div>
-            );
-        }
+        return (
+            <div className={styles['nav-items-container']}>
+                <p className={styles.name}>{`${user!.firstName} ${user!.lastName}`}</p>
+                <p className={styles.name}>{`Balance: $${user!.balance.toFixed(2)}`}</p>
+                <button className={styles.logout} onClick={stocks}>Stocks</button>
+                <button className={styles.logout} onClick={portfolio}>Portfolio</button>
+                <button className={styles.logout} onClick={logout}>Logout</button>
+            </div>
+        );
     }
 
     return (
