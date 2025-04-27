@@ -1,44 +1,70 @@
 .navbar {
     display: flex;
     align-items: center;
-    background-color: rgb(15, 17, 17);
-    height: 80px;
-    justify-content: space-between;
+    background-color: black;
+    height: 100px;
     gap: 10px;
 }
 
 .logo {
-    height: 45px;
-    margin-left: 20px;
+    height: 90px;
+    margin-left: 15px;
 }
 
-.logout {
-    padding: 6px 10px;
-    border: 2px solid black;
-    border-radius: 5px;
-    background-color: orange;
-    font-size: 15px;
-    color: black;
-    font-weight: bold;
+.button {
+    padding: 0 20px;
+    height: 100%;
+    background-color: transparent;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
     cursor: pointer;
+    border: none;
     transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.logout:hover {
-    color: orange;
-    background-color: black;
-    border: 2px solid orange;
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light highlight */
+}
+
+.button.active {
+    background-color: rgba(255, 255, 255, 0.1); /* Active button highlight */
 }
 
 .nav-items-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
     margin-right: 20px;
     gap: 20px;
+    justify-content: space-between;
+    width: 100%;
+    height: 100px;
+}
+
+.nav-fields-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    margin-left: 15px;
+}
+
+.nav-buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 15px;
+    height: 100px;
 }
 
 .name {
     color: white;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 26px;
 }
