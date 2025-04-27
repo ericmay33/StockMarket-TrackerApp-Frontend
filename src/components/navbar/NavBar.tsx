@@ -35,6 +35,11 @@ export default function NavBar() {
         }
     });
 
+    window.addEventListener('user-updated', (event) => {
+        const customEvent = event as CustomEvent<{ user: User }>;
+        setUser(customEvent.detail.user);
+    });
+
     function logout() {
         localStorage.removeItem('token');
         window.dispatchEvent(new Event('storage'));
@@ -59,7 +64,7 @@ export default function NavBar() {
             return (
                 <div className={styles['nav-items-container']}>
                     <p className={styles.name}>{`${user!.firstName} ${user!.lastName}`}</p>
-                    <p className={styles.name}>{`Balance: $${user!.balance}`}</p>
+                    <p className={styles.name}>{`Balance: $${user!.balance.toFixed(2)}`}</p>
                     <button className={styles.logout} onClick={stocks}>Stocks</button>
                     <button className={styles.logout} onClick={portfolio}>Portfolio</button>
                     <button className={styles.logout} onClick={logout}>Logout</button>

@@ -31,6 +31,7 @@ export default function Browse() {
                 <StockCard
                     key={stock.ticker}
                     stock={stock}
+                    userToken={token}
                     sellButton={false}
                 />
             )

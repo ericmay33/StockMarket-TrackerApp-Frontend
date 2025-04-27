@@ -25,12 +25,12 @@ export async function getPortfolio(token: string): Promise<PortfolioStock[]> {
 
 export async function buyStock(token: string, ticker: string, amount: number): Promise<User> {
     const response = await axios.post(`${BACKEND_URL}/buy`, { ticker, amount }, { headers: { token } });
-    return response.data;
+    return response.data.user;
 }
 
 export async function sellStock(token: string, ticker: string, amount: number): Promise<User> {
     const response = await axios.post(`${BACKEND_URL}/sell`, { ticker, amount }, { headers: { token } });
-    return response.data;
+    return response.data.user;
 }
 
 export async function login(username: string, password: string): Promise<string> {

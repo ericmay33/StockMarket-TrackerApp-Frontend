@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react'
 import styles from './Browse.module.css'
-import { PortfolioStock} from '../utils/types'
-import { getPortfolio } from '../utils/api'
+import { PortfolioStock, User} from '../utils/types'
+import { getPortfolio} from '../utils/api'
 import { useNavigate } from 'react-router-dom';
 import StockCard from '../components/stock-card/StockCard';
 
-export default function Browse() {
+export default function Portfolio() {
     const [portfolio, setPortfolio] = useState([] as PortfolioStock[]);
+    const [user, setUser] = useState<User | null>(null);
 
     const token = localStorage.getItem('token') as string;
     const navigate = useNavigate();
 
-    async function loadPorfolio() {
-        const portfolioApiData = await getPortfolio(token);
-        setPortfolio(portfolioApiData);
+    async function loadPortfolio() {
+        const portfolioData = await getPortfolio(token);
+        setPortfolio(portfolioData);
     };
 
     useEffect(() => {
-        document.title = "Your Portfolio"
+        document.title = "Your Portfolio";
         if (!token) {
             navigate('/');
         } else {
-            loadPorfolio();
+            loadPortfolio();
         }
-    }, []);
+    }, [token, navigate]);
+
+    useEffect(() => {
+        if (user) {
+            setPortfolio(user.portfolio);
+        }
+    }, [user]);
 
     function createStockCards() {
         return portfolio.map(stock => {
@@ -31,7 +38,9 @@ export default function Browse() {
                 <StockCard
                     key={stock.ticker}
                     stock={stock}
+                    userToken={token}
                     sellButton={true}
+                    onUserUpdate={setUser}
                 />
             )
         })
