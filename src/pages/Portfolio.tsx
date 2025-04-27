@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from './Browse.module.css'
+import styles from './Portfolio.module.css'
 import { PortfolioStock, User} from '../utils/types'
 import { getPortfolio} from '../utils/api'
 import { useNavigate } from 'react-router-dom';
@@ -48,9 +48,10 @@ export default function Portfolio() {
 
     return (
         <div className={styles['main-container']}>
-            <h1>Portfolio Stocks</h1>
-            <p className={styles['number-of-portfolio-stocks']}>Number of stocks in Portfolio: <span>{portfolio.length}</span></p>
-            <p></p>
+            {portfolio.length === 0 ? (
+                <p className={styles['port-empty']}>Portfolio Empty.</p>) : 
+                (<h1 className={styles['port-title']}>Portfolio Stocks</h1>
+            )}
             <div className={styles['portfolio-list']}>
                 { createStockCards() }
             </div>

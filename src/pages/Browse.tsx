@@ -40,8 +40,7 @@ export default function Browse() {
 
     return (
         <div className={styles['main-container']}>
-            <h1>Browse Stocks</h1>
-            <p className={styles['number-of-stocks']}>Number of stocks: <span>{stocks.length}</span></p>
+            <h1 className={styles['dash-title']}>Stocks Dashboard</h1>
             <p></p>
             <div className={styles['stock-list']}>
                 { createStockCards() }
