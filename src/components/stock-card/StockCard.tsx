@@ -14,14 +14,21 @@ export interface StockCardProps {
 }
 
 export default function StockCard(props: StockCardProps) {
-    const [buyAmount, setBuyAmount] = useState(1);
-    const [sellAmount, setSellAmount] = useState(1);
+    const [amount, setAmount] = useState(1)
     const [errorMessage, setErrorMessage] = useState('');
     const stock = props.stock;
 
     function isPortfolioStock(stock: Stock | PortfolioStock): stock is PortfolioStock {
         return (stock as PortfolioStock).amount !== undefined && (stock as PortfolioStock).averagePrice !== undefined;
     }
+
+    const handleAmountChange = (action: 'increase' | 'decrease') => {
+        setAmount(prev => {
+            if (action === 'increase') return Math.max(prev + 1, 1);
+            if (action === 'decrease') return Math.max(prev - 1, 1);
+            return prev;
+        });
+    };
 
     async function handleBuy(token: string, amount: number): Promise<void> {
         setErrorMessage("");
@@ -36,6 +43,7 @@ export default function StockCard(props: StockCardProps) {
         } catch (err) {
             if (axios.isAxiosError(err)) {
                 if (err.response?.status === 409) {
+                    window.dispatchEvent(new CustomEvent("buy-error"));
                     setErrorMessage("Insufficient balance to buy this stock.");
                     return;
                 }
@@ -51,6 +59,7 @@ export default function StockCard(props: StockCardProps) {
             return;
         }
         if (isPortfolioStock(stock) && amount > stock.amount) {
+            window.dispatchEvent(new CustomEvent("sell-error"));
             setErrorMessage("You don't have enough stocks to sell.");
             return;
         }
@@ -61,6 +70,7 @@ export default function StockCard(props: StockCardProps) {
         } catch (err) {
             if (axios.isAxiosError(err)) {
                 if (err.response?.status === 409) {
+                    window.dispatchEvent(new CustomEvent("sell-error"));
                     setErrorMessage("You don't have enough stocks to sell.");
                     return;
                 }
@@ -69,8 +79,20 @@ export default function StockCard(props: StockCardProps) {
         }
     }
 
-    const isNegative = stock.percentChange < 0 as boolean;
+    const isNegative = stock.percentChange < 0;
 
+    function calculateValue(s: PortfolioStock): number {
+        return (s.price * s.amount);
+    }
+
+    function calculateChangeTotal(s: PortfolioStock): number {
+        return ((s.price * s.amount) - (s.averagePrice * s.amount));
+    }
+
+    function calculateChangePercent(s: PortfolioStock): number {
+        return ((s.price - s.averagePrice) / s.averagePrice) * 100;
+    }
+ 
     return (
         <div className={styles['stock-container']}>
             <div className={styles['stock-image-container']}>
@@ -96,40 +118,74 @@ export default function StockCard(props: StockCardProps) {
                 </div>
             </div>
 
-            <div className={styles['form-container']}>
-                <div className={styles['button-container']}>
-                    <div>
-                        <button className={`${styles['stock-button']} ${styles['green-button']}`} onClick={() => handleBuy(props.userToken, buyAmount)}>Buy</button>
-                    </div>
-
-                    {props.sellButton && 
-                        <div>
-                            <button className={`${styles['stock-button']} ${styles['red-button']}`} onClick={() => handleSell(props.userToken, sellAmount)}>Sell</button>
-                        </div>
-                    }
-                </div>
-
-                <input type="number" min={1} value={buyAmount} onChange={(e) => setBuyAmount(parseInt(e.target.value) || 1)} style={{ width: "60px" }}/>
-            </div>
-
             {isPortfolioStock(stock) && (
-                <div className={styles['stock-portfolio-container']}>
-                    <div className={`${styles['portfolio-item']}`}>
-                        <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Shares: </p>
-                        <p className={`${styles['portfolio-value']} ${styles['inline']}`}> {stock.amount}</p>
-                    </div>
-                    <div className={styles['portfolio-item']}>
-                        <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Avg. Price: </p>
-                        <p className={`${styles['portfolio-value']} ${styles['inline']}`}> ${stock.averagePrice.toFixed(2)}</p>
+                <div>
+                    <div className={styles['stock-portfolio-container']}>
+                        <div className={`${styles['portfolio-item']}`}>
+                            <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Shares: </p>
+                            <p className={`${styles['portfolio-value']} ${styles['inline']}`}> {stock.amount}</p>
+                        </div>
+                        <div className={styles['portfolio-item']}>
+                            <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Avg. Price: </p>
+                            <p className={`${styles['portfolio-value']} ${styles['inline']}`}> ${stock.averagePrice.toFixed(2)}</p>
+                        </div>
                     </div>
                 </div>
             )}
 
-            {errorMessage && (
-                <p className={styles["error-message"]} style={{ color: "red", marginTop: "8px" }}>
-                    {errorMessage}
-                </p>
-            )} 
+            <div className={styles['form-container']}>
+                <div className={styles['button-container']}>
+                    <div>
+                        <button className={`${styles['stock-button']} ${styles['green-button']}`} onClick={() => handleBuy(props.userToken, amount)}>Buy</button>
+                    </div>
+
+                    {props.sellButton && 
+                        <div>
+                            <button className={`${styles['stock-button']} ${styles['red-button']}`} onClick={() => handleSell(props.userToken, amount)}>Sell</button>
+                        </div>
+                    }
+                </div>
+
+                <div className={styles['amount-picker-container']}>
+                    <button className={styles['amount-arrow-button']} onClick={() => handleAmountChange('increase')}>▲</button>
+                    <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(Math.max(Number(e.target.value), 1))}
+                        className={styles['amount-input']}
+                        min={1}/>
+                    <button className={styles['amount-arrow-button']} onClick={() => handleAmountChange('decrease')}>▼</button>
+                </div>
+            </div>
+
+            {isPortfolioStock(stock) && (() => {
+                const changeTotal = calculateChangeTotal(stock);
+                const changePercent = calculateChangePercent(stock);
+                const changeTotalClass = changeTotal > 0 ? styles['portfolio-text-green'] : (changeTotal < 0 ? styles['portfolio-text-red'] : ''); 
+                const changePercentClass = changePercent > 0 ? styles['portfolio-text-green'] : (changePercent < 0 ? styles['portfolio-text-red'] : '');
+
+                return (
+                    <div className={styles['stock-portfolio-total-container']}>
+                        <p className={`${styles['portfolio-total-label']}`}>Overview</p>
+                        <div className={`${styles['portfolio-item']}`}>
+                            <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Total Value: </p>
+                            <p className={`${styles['portfolio-value']} ${styles['inline']}`}> ${calculateValue(stock).toFixed(2)}</p>
+                        </div>
+                        <div className={styles['portfolio-item']}>
+                            <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Total Change: </p>
+                            <p className={`${styles['portfolio-value']} ${styles['inline']} ${changeTotalClass}`}>
+                                {changeTotal >= 0 ? `+$${changeTotal.toFixed(2)}` : `-$${Math.abs(changeTotal).toFixed(2)}`}
+                            </p>
+                        </div>
+                        <div className={styles['portfolio-item']}>
+                            <p className={`${styles['portfolio-label']} ${styles['inline']}`}>Total Return: </p>
+                            <p className={`${styles['portfolio-value']} ${styles['inline']} ${changePercentClass}`}>
+                                {changePercent >= 0 ? `+${changePercent.toFixed(2)}%` : `${changePercent.toFixed(2)}%`}
+                            </p>
+                        </div>
+                    </div>
+                );
+            })()}
         </div>
     )
 }

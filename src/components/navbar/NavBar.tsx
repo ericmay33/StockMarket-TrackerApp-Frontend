@@ -11,6 +11,7 @@ export default function NavBar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [activePage, setActivePage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -47,6 +48,21 @@ export default function NavBar() {
         setUser(customEvent.detail.user);
     });
 
+    window.addEventListener('buy-error', () => {
+        setErrorMessage("Insufficient balance to complete the purchase!");
+        setTimeout(() => {
+            setErrorMessage("");
+        }, 4000);
+    });
+
+    window.addEventListener("sell-error", () => {
+        console.log('Sell error triggered');
+        setErrorMessage("You don't have enough stocks to sell!");
+        setTimeout(() => {
+            setErrorMessage("");
+        }, 4000);
+    });
+
     function logout() {
         localStorage.removeItem('token');
         window.dispatchEvent(new Event('storage'));
@@ -75,6 +91,9 @@ export default function NavBar() {
                     <p className={styles.name}>{`${user!.firstName} ${user!.lastName}`}</p>
                     <p className={styles.name}>{`Balance: $${user!.balance.toFixed(2)}`}</p>
                 </div>
+                {errorMessage && (
+                    <div className={styles.error}>{errorMessage}</div>
+                )}
                 <div className={styles['nav-buttons-container']}>
                     <button className={`${styles.button} ${activePage === '/browse' ? styles.active : ''}`} onClick={stocks}>Stocks</button>
                     <button className={`${styles.button} ${activePage === '/portfolio' ? styles.active : ''}`} onClick={portfolio}>Portfolio</button>
