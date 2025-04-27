@@ -8,6 +8,7 @@ import Login from './pages/Login.tsx';
 import Browse from './pages/Browse.tsx';
 import Portfolio from './pages/Portfolio.tsx';
 import StockPage from './pages/StockPage.tsx';
+import Register from './pages/Register.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />}></Route>
 
         <Route path="/" element={<MainLayout />}>
           <Route path="/browse" element={<Browse />} />

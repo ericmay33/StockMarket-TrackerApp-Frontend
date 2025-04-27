@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import styles from './Login.module.css'
-import { login } from '../utils/api.ts'
+import styles from './Register.module.css'
+import { register } from '../utils/api.ts'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Login() {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
@@ -14,12 +16,20 @@ export default function Login() {
         if (localStorage.getItem('token')) {
             navigate('/browse')
         }
-        document.title = "Login"
+        document.title = "Sign Up"
     }, []);
     
     async function submitForm(e: any) {
         e.preventDefault()
         setErrorMessage('')
+        if (!firstName) {
+            setErrorMessage('First Name cannot be empty!')
+            return
+        }
+        if (!lastName) {
+            setErrorMessage('Last Name cannot be empty!')
+            return
+        }
         if (!username) {
             setErrorMessage('Username cannot be empty!')
             return
@@ -29,15 +39,15 @@ export default function Login() {
             return
         }
         try {
-            const token = await login(username, password);
+            const token = await register(firstName, lastName, username, password);
             localStorage.setItem('token', token)
             window.dispatchEvent(new Event("storage"));
-            navigate('/browse')
+            navigate('/browse');
         }
         catch (err) {
             if (axios.isAxiosError(err)) {
-                if (err.response?.status === 401) {
-                    setErrorMessage('Incorrect username and/or password')
+                if (err.response?.status === 403) {
+                    setErrorMessage('User with that username already exists.')
                     return
                 }
             }
@@ -47,10 +57,18 @@ export default function Login() {
 
     return (
         <div className={styles['main-container']}>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <p>Please enter in your username and password.</p>
             <form onSubmit={submitForm}>
                 <div className={styles['form-container']}>
+                    <div className={styles['field-container']}>
+                        <p className={styles['field-label']}>First Name:</p>
+                        <input className={styles['field-input']} value={firstName} type="text" onChange={(e) => { setFirstName(e.target.value)}}/>
+                    </div>
+                    <div className={styles['field-container']}>
+                        <p className={styles['field-label']}>Last Name:</p>
+                        <input className={styles['field-input']} value={lastName} type="text" onChange={(e) => { setLastName(e.target.value)}}/>
+                    </div>
                     <div className={styles['field-container']}>
                         <p className={styles['field-label']}>Username:</p>
                         <input className={styles['field-input']} value={username} type="text" onChange={(e) => { setUsername(e.target.value)}}/>
@@ -61,9 +79,9 @@ export default function Login() {
                     </div>
                 </div>
                 <button className={styles.button} type='submit'>Submit</button>
-                <p>Don't have an account?
-                    <Link className={styles['stock-link']} to={'/register'}>
-                        <span>Sign Up</span>
+                <p>Already have an account?
+                    <Link className={styles['stock-link']} to={'/login'}>
+                        <span>Login</span>
                     </Link>
                 </p>
                 <p className={styles.error}>{errorMessage}</p>

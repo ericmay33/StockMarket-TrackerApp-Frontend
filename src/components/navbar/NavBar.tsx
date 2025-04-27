@@ -47,7 +47,7 @@ export default function NavBar() {
     }
 
     function stocks() {
-        navigate('/');
+        navigate('/browse');
     }
 
     function createNavItems() {
@@ -70,7 +70,7 @@ export default function NavBar() {
 
     return (
         <div className={styles.navbar}>
-            <Link to="/" className={styles.logo}>
+            <Link to="/browse" className={styles.logo}>
                 Stock Market
             </Link>
             { createNavItems() }

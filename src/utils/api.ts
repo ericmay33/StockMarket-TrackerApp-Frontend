@@ -42,7 +42,3 @@ export async function register(firstName: string, lastName: string, username: st
     const response = await axios.post(`${BACKEND_URL}/register`, { firstName, lastName, username, password });
     return response.data.token;
 }
-
-export async function deleteUser(token: string): Promise<void> {
-    await axios.delete(`${BACKEND_URL}/user`, { headers: { token } });
-}
