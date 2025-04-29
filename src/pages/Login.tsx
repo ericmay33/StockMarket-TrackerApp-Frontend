@@ -3,6 +3,7 @@ import styles from './Login.module.css'
 import { login } from '../utils/api.ts'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import logo from '../../public/stockapp-logo.jpg'
 
 export default function Login() {
     const [username, setUsername] = useState('')
@@ -48,7 +49,10 @@ export default function Login() {
     return (
         <div className={styles['main-container']}>
             <div className={styles['center']}>
-                <h1>Login</h1>
+                <div className={styles.header}>
+                    <img src={logo} alt="" className={styles.image}/>
+                    <h1>Login</h1>
+                </div>
                 <form onSubmit={submitForm}>
                     <div className={styles['field-container']}>
                         <label className={styles['field-label']}>Username</label>
@@ -60,12 +64,12 @@ export default function Login() {
                     </div>
                     <div className={styles['bottom-container']}>
                         <button className={styles.button} type='submit'>Login</button>
-                        <p>Don't have an account?
+                        <p className={styles.grey}>Don't have an account?
                             <Link className={styles['link']} to={'/register'}>
                                 <span>Sign Up</span>
                             </Link>
                         </p>
-                        <p className={styles.error}>{errorMessage}</p>
+                        <p className={styles['error']}>{errorMessage}</p>
                     </div>
                 </form>
             </div>

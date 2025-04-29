@@ -3,6 +3,7 @@ import styles from './Register.module.css'
 import { register } from '../utils/api.ts'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import logo from '../../public/stockapp-logo.jpg'
 
 export default function Login() {
     const [firstName, setFirstName] = useState('');
@@ -57,10 +58,12 @@ export default function Login() {
 
     return (
         <div className={styles['main-container']}>
-            <h1>Register</h1>
-            <p>Please enter in your username and password.</p>
-            <form onSubmit={submitForm}>
-                <div className={styles['form-container']}>
+            <div className={styles['center']}>
+                <div className={styles.header}>
+                    <img src={logo} alt="" className={styles.image}/>
+                    <h1>Register</h1>
+                </div>
+                <form onSubmit={submitForm}>
                     <div className={styles['field-container']}>
                         <p className={styles['field-label']}>First Name:</p>
                         <input className={styles['field-input']} value={firstName} type="text" onChange={(e) => { setFirstName(e.target.value)}}/>
@@ -77,15 +80,17 @@ export default function Login() {
                         <p className={styles['field-label']}>Password:</p>
                         <input className={styles['field-input']} value={password} type="password" onChange={(e) => { setPassword(e.target.value)}}/>
                     </div>
-                </div>
-                <button className={styles.button} type='submit'>Submit</button>
-                <p>Already have an account?
-                    <Link className={styles['stock-link']} to={'/login'}>
-                        <span>Login</span>
-                    </Link>
-                </p>
-                <p className={styles.error}>{errorMessage}</p>
-            </form>
+                    <div className={styles['bottom-container']}>
+                        <button className={styles.button} type='submit'>Submit</button>
+                        <p className={styles.grey}>Already have an account?
+                            <Link className={styles['link']} to={'/login'}>
+                                <span>Login</span>
+                            </Link>
+                        </p>
+                        <p className={styles.error}>{errorMessage}</p>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
