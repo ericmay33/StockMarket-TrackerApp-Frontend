@@ -47,27 +47,28 @@ export default function Login() {
 
     return (
         <div className={styles['main-container']}>
-            <h1>Login</h1>
-            <p>Please enter in your username and password.</p>
-            <form onSubmit={submitForm}>
-                <div className={styles['form-container']}>
+            <div className={styles['center']}>
+                <h1>Login</h1>
+                <form onSubmit={submitForm}>
                     <div className={styles['field-container']}>
-                        <p className={styles['field-label']}>Username:</p>
+                        <label className={styles['field-label']}>Username</label>
                         <input className={styles['field-input']} value={username} type="text" onChange={(e) => { setUsername(e.target.value)}}/>
                     </div>
                     <div className={styles['field-container']}>
-                        <p className={styles['field-label']}>Password:</p>
+                        <label className={styles['field-label']}>Password</label>
                         <input className={styles['field-input']} value={password} type="password" onChange={(e) => { setPassword(e.target.value)}}/>
                     </div>
-                </div>
-                <button className={styles.button} type='submit'>Submit</button>
-                <p>Don't have an account?
-                    <Link className={styles['stock-link']} to={'/register'}>
-                        <span>Sign Up</span>
-                    </Link>
-                </p>
-                <p className={styles.error}>{errorMessage}</p>
-            </form>
+                    <div className={styles['bottom-container']}>
+                        <button className={styles.button} type='submit'>Login</button>
+                        <p>Don't have an account?
+                            <Link className={styles['link']} to={'/register'}>
+                                <span>Sign Up</span>
+                            </Link>
+                        </p>
+                        <p className={styles.error}>{errorMessage}</p>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

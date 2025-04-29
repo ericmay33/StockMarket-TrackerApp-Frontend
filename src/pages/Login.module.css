@@ -1,38 +1,110 @@
-h1 {
-    font-size: 40px;
-    margin-bottom: 5px;
-    color: black;
-}
-
 .main-container {
     margin: 8px;
+    font-family: Roboto;
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.center {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 10px;
+    width: 35%;
+}
+
+.center h1 {
+    text-align: center;
+    padding-bottom: 15px;
+    margin-top: 20px;
+    border-bottom: 1px solid rgb(111, 111, 111);
+    font-size: 42px;
 }
 
 .field-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    border-bottom: 2px solid rgb(150, 150, 150);
+    margin: 30px;
+    transition: border-color 0.3s ease;
+}
+
+.field-container:hover {
+    border-bottom-color: black;
+}
+
+.field-container:focus-within {
+    border-bottom-color: rgb(73, 128, 255);
+}
+
+.field-container:focus-within .field-label {
+    color: rgb(73, 128, 255);
 }
 
 .field-label {
-    width: 80px;
-    margin: 0;
+    font-size: 17px;
+    transition: color 0.3s ease;
+    margin-left: 5px;
 }
 
 .field-input {
-    width: 200px;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    height: 35px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: Roboto;
+    transition: all 0.3s ease;
+}
+
+.bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottom-container p {
+    font-family: Roboto;
+    font-size: 17px;
+    color: rgb(94, 94, 94);
+    margin-bottom: 10px;
+}
+
+.link {
+    text-decoration: none;
+    color: rgb(73, 128, 255);
+    font-weight: 500;
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: rgb(132, 0, 255);
 }
 
 .button {
     margin-top: 20px;
-    width: 200px;
-    height: 40px;
+    margin-bottom: 20px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border: 2px solid rgb(88, 88, 88);
+    border-radius: 40px;
+    outline: none;
+    width: 60%;
+    font-size: 19px;
+    font-weight: bold;
+    transition: ease .2s;
 }
+
+.button:hover {
+    background-color: rgb(111, 154, 255);
+    color: white;
+    border-color: white;
+}
+
 
 .error {
     color: red;
