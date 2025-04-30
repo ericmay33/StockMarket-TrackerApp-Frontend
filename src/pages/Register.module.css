@@ -105,6 +105,7 @@ body {
     font-weight: 500;
     margin: 0;
     margin-left: 5px;
+    margin-top: 0px;
     transition: color 0.3s ease;
 }
 
@@ -114,10 +115,10 @@ body {
 
 .button {
     margin-top: 35px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding-top: 14px;
     padding-bottom: 14px;
-    border: 2px solid rgb(88, 88, 88);
+    border: 2px solid black;
     border-radius: 40px;
     outline: none;
     width: 60%;
@@ -127,7 +128,7 @@ body {
 }
 
 .button:hover {
-    background-color: rgb(111, 154, 255);
+    background-color: rgb(87, 0, 145);
     color: white;
     border-color: white;
 }
