@@ -44,21 +44,23 @@ export default function StockPage() {
     }
 
     return (
-        <div className={styles['main-container']}>
-            <h1 className={styles['stock-name']}>{stock.name}</h1>
-            <img className={styles['stock-image']} src={stock.image} alt={`${stock.name} Image`} />
-            
-            <h2 id="about" className={styles['about-label']}>About</h2>
-            <div className={styles['stock-info-container']}>
-                <p className={styles['about-stock']}><strong>Ticker:</strong> ${stock.ticker}</p>
-                <p className={styles['about-stock']}><strong>Market Cap:</strong> ${stock.marketCap.toLocaleString()}</p>
-                <p className={styles['about-stock']}><strong>Sector:</strong> {stock.sector}</p>
-                <p className={styles['about-stock']}><strong>Industry:</strong> {stock.industry}</p>
-            </div>
+        <div className={styles['flex-justify-center']}>
+            <div className={styles['main-container']}>
+                <h1 className={styles['stock-name']}>{stock.name}</h1>
+                <img className={styles['stock-image']} src={stock.image} alt={`${stock.name} Image`} />
+                
+                <h2 id="about" className={styles['about-label']}>About</h2>
+                <div className={styles['stock-info-container']}>
+                    <p className={styles['about-stock']}><strong>Ticker:</strong> ${stock.ticker}</p>
+                    <p className={styles['about-stock']}><strong>Market Cap:</strong> ${stock.marketCap.toLocaleString()}</p>
+                    <p className={styles['about-stock']}><strong>Sector:</strong> {stock.sector}</p>
+                    <p className={styles['about-stock']}><strong>Industry:</strong> {stock.industry}</p>
+                </div>
 
-            <h2 id="about" className={styles['about-label']}>Description</h2>
-            <div className={styles['stock-info-container']}>
-                <p className={styles['about-stock']}>{stock.description}</p>
+                <h2 id="about" className={styles['about-label']}>Description</h2>
+                <div className={styles['stock-info-container']}>
+                    <p className={styles['about-stock']}>{stock.description}</p>
+                </div>
             </div>
         </div>
     )

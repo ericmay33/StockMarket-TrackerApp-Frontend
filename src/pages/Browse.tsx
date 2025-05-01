@@ -7,7 +7,7 @@ import StockCard from '../components/stock-card/StockCard'
 
 export default function Browse() {
     const [stocks, setStocks] = useState([] as Stock[])
-
+    const [searchTerm, setSearchTerm] = useState('');
     const token = localStorage.getItem('token') as string;
     const navigate = useNavigate();
 
@@ -25,8 +25,13 @@ export default function Browse() {
         }
     }, []);
 
+    // filter based on searchTerm
+    const filteredStocks = stocks.filter(stock =>
+        stock.ticker.toLowerCase().startsWith(searchTerm.toLowerCase())
+    );
+
     function createStockCards() {
-        return stocks.map(stock => {
+        return filteredStocks.map(stock => {
             return (
                 <StockCard
                     key={stock.ticker}
@@ -41,9 +46,13 @@ export default function Browse() {
     return (
         <div className={styles['main-container']}>
             <h1 className={styles['dash-title']}>Stocks Dashboard</h1>
-            <p></p>
+            <input className={styles['search-bar']} type="text" placeholder="Search by ticker (e.g., AAPL)" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
             <div className={styles['stock-list']}>
-                { createStockCards() }
+            {filteredStocks.length === 0 ? (
+                <p className={styles['missing-text']}>No matching stocks found.</p>
+                ) : (
+                    createStockCards()
+                )}
             </div>
         </div>
     )
